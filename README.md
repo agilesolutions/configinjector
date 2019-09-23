@@ -1,6 +1,5 @@
-# BOM Bill of Material verifier
-Scan Spring boot jar file for libraries complying to the content of bom.txt. This app is going to be wrapped on container and be run as a jenkins pipeline 2.0 agent.
-Let the jenkins build fail if any of the included libraries on that spring boot app are violating the compliancy of the BOM test.
+# Kubernetes HELM configuration injector
+Fetches secure Spring Boot applciation configs from Spring Cloud Config server and injects config on HELM chart on configmap. This GO app get packaged on docker images and executed as Jenkins Docker Agent on Jenkins Groovy deployment pipeline
 ## functionality
 
 1. wget the BOM txt file from github
