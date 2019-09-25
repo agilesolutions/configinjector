@@ -1,5 +1,5 @@
 # Kubernetes HELM configuration injector
-Fetches secure Spring Boot aplication configs from Spring Cloud Config server and injects config on HELM chart on a k8s configmap. This GO app get packaged on docker images and executed as Jenkins Docker Agent on Jenkins Groovy deployment pipeline
+Fetches Spring Boot application configurtation files (yaml, properties) from Spring Cloud Config server and injects config on HELM chart on a k8s configmap. This GO app get packaged on docker images and executed as Jenkins Docker Agent on Jenkins Groovy deployment pipeline
 [Read about Spring Cloud Config server](https://o7planning.org/en/11727/understanding-spring-cloud-config-client-with-example)
 
 ## Injecting Spring
