@@ -10,7 +10,7 @@ LABEL maintainer="Robert Rong <robert.rong@agile-solutions.ch>"
 WORKDIR /app
 
 # first GO build and then copy this into the workdir
-COPY bomverifier . 
+COPY configinjector . 
 
 # extend PATH
 ENV PATH="${PATH}:/app"
