@@ -1,5 +1,7 @@
 # Kubernetes HELM configuration injector
-Fetches secure Spring Boot applciation configs from Spring Cloud Config server and injects config on HELM chart on configmap. This GO app get packaged on docker images and executed as Jenkins Docker Agent on Jenkins Groovy deployment pipeline
+Fetches secure Spring Boot aplication configs from Spring Cloud Config server and injects config on HELM chart on a k8s configmap. This GO app get packaged on docker images and executed as Jenkins Docker Agent on Jenkins Groovy deployment pipeline
+[Read about Spring Cloud Config server](https://o7planning.org/en/11727/understanding-spring-cloud-config-client-with-example)
+
 ## functionality
 
 1. wget the BOM txt file from github
@@ -10,7 +12,7 @@ Fetches secure Spring Boot applciation configs from Spring Cloud Config server a
 ## setup
 
 * [goto](https://www.katacoda.com/courses/docker/deploying-first-container)
-* git clone https://github.com/agilesolutions/bomverifier.git
+* git clone https://github.com/agilesolutions/configinjector.git
 * curl -LO https://dl.google.com/go/go1.13.linux-amd64.tar.gz
 * tar -C /usr/local -xzf go1.13.linux-amd64.tar.gz
 * export PATH=$PATH:/usr/local/go/bin	
@@ -22,15 +24,15 @@ Fetches secure Spring Boot applciation configs from Spring Cloud Config server a
 ## build
 
 ```
-go build -o bomverifier .
+go build -o  .
 
-bomverifier -url=https://raw.githubusercontent.com/agilesolutions/bomverifier/master/bom.txt -terminate
+configinjector -url=https://github.com/o7planning/spring-cloud-config-git-repo-example -directory=chart
 
-docker build -t agilesolutions/bomverifier:latest .
+docker build -t agilesolutions/configinjectorr:latest .
 ```
 
 ## run
-bomverfier -url=https://raw.githubusercontent.com/agilesolutions/bomverifier/master/bom.txt -terminate
+configinjector -url=https://github.com/o7planning/spring-cloud-config-git-repo-example -directory=chart
 
 ## where to find the Springboot BOM details and release trains
 
@@ -57,37 +59,40 @@ pipeline {
     DOCKER_IMAGE = null
   }
   stages {
-    stage('Verify') {
+    stage('config') {
       agent {
           docker {
-              image 'agilesolutions/bomverifier:latest'
+              image 'agilesolutions/configinjector:latest'
           }
       }
       steps {
         sh 'bomverifier -url=https://raw.githubusercontent.com/agilesolutions/bomverifier/master/bom.txt -terminate'
       }
     }
-    stage('Build') {
-      agent {
-          docker {
-              image 'maven:3-alpine'
-            // do some caching on maven here
-              args '-v $HOME/.m2:/root/.m2'
-          }
+    stage("deploy") {
+      when {
+        branch "master"
       }
       steps {
-        sh 'mvn clean install'
-      }
-    }
-    stage('dockerbuild') {
-      steps {
-        script {
-          DOCKER_IMAGE = docker.build("katacodarob/demo:latest")
+        container("helm") {
+			k8sUpgrade(params.artifact, params.version)
         }
       }
     }
 ```
+Groovy k8sUpgrade pipeline step...
 
+```
+def call(artifact, version ) {
+    sh 'helm upgrade \
+        ${artifact} \
+        charts/${artifact} -i \
+        --namespace ${artifact} \
+        --set image.tag=${version} \
+        --set ingress.host=${artifact} \
+        --reuse-values'
+}
+```
 
 ## read
 
