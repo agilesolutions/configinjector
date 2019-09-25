@@ -2,12 +2,15 @@
 Fetches secure Spring Boot aplication configs from Spring Cloud Config server and injects config on HELM chart on a k8s configmap. This GO app get packaged on docker images and executed as Jenkins Docker Agent on Jenkins Groovy deployment pipeline
 [Read about Spring Cloud Config server](https://o7planning.org/en/11727/understanding-spring-cloud-config-client-with-example)
 
-## functionality
+## Injecting Spring
 
-1. wget the BOM txt file from github
-2. go into the springboot jar file zip file and discover all libraries
-3. check the compliancy againt the BOM txt
-4. report and conditionally break off
+1. JIRA deployment ticket triggers Jenkins deployment pipeline with JIRA webhook
+2. Jenkins pipeline stage fetches HELM charts from GIT repo
+3. Jenkins Agent (this GO program) fetches Spring Boot application configs from Spring Cloud Config server.
+4. HELM fetches Docker Image from Harbor Docker registry
+5. HELM deploys Docker Image on kubernetes cluster through deployment, service, configmap and ingres k8s manifests
+
+![Jenkins kubernetes pipelines](pipeline.JPG)
 
 ## setup
 
