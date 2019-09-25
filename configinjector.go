@@ -43,7 +43,7 @@ func main() {
 
 		defer response.Body.Close()
 
-	nbody, err := ioutil.ReadAll(response.Body)
+	nbody,_ := ioutil.ReadAll(response.Body)
 
 	var m interface{}
 
