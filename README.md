@@ -35,7 +35,9 @@ docker build -t agilesolutions/configinjectorr:latest .
 ```
 
 ## run
-configinjector -url=https://github.com/o7planning/spring-cloud-config-git-repo-example -directory=chart
+configinjector -url=https://localhost:8888/{application}/{profile}[/{label}] -directory=chart
+
+In which {label} placeholder refers to a GIT branch, {application} to the client's application name and the {profile} to the client's current active application profile.
 
 ## where to find the Springboot BOM details and release trains
 
