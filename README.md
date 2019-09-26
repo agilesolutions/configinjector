@@ -39,10 +39,6 @@ configinjector -url=https://localhost:8888/{application}/{profile}[/{label}] -di
 
 In which {label} placeholder refers to a GIT branch, {application} to the client's application name and the {profile} to the client's current active application profile.
 
-## where to find the Springboot BOM details and release trains
-
-* [spring-boot-dependencies BOM](https://github.com/spring-projects/spring-boot/blob/master/spring-boot-project/spring-boot-dependencies/pom.xml)
-
 ## now run this docker agent on a jenkins pipeline, lets spin up jenkins
 
 * [go to katacoda](https://www.katacoda.com/courses/kubernetes/helm-package-manager)
