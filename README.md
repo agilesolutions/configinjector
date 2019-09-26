@@ -29,7 +29,7 @@ Fetches Spring Boot application configurtation files (yaml, properties) from Spr
 ```
 go build -o  .
 
-configinjector -url=https://github.com/o7planning/spring-cloud-config-git-repo-example -directory=chart
+configinjector -url=https://localhost:8888/{application}/{profile}[/{label}] -directory=chart
 
 docker build -t agilesolutions/configinjectorr:latest .
 ```
