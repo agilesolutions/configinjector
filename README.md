@@ -30,17 +30,15 @@ Fetches Spring Boot application configurtation files (yaml, properties) from Spr
 ```
 go build -o  .
 
-configinjector -url=https://github.com/o7planning/spring-cloud-config-git-repo-example -directory=chart
+configinjector -url=https://localhost:8888/{application}/{profile}[/{label}] -directory=chart
 
 docker build -t agilesolutions/configinjectorr:latest .
 ```
 
 ## run
-configinjector -url=https://github.com/o7planning/spring-cloud-config-git-repo-example -directory=chart
+configinjector -url=https://localhost:8888/{application}/{profile}[/{label}] -directory=chart
 
-## where to find the Springboot BOM details and release trains
-
-* [spring-boot-dependencies BOM](https://github.com/spring-projects/spring-boot/blob/master/spring-boot-project/spring-boot-dependencies/pom.xml)
+In which {label} placeholder refers to a GIT branch, {application} to the client's application name and the {profile} to the client's current active application profile.
 
 ## now run this docker agent on a jenkins pipeline, lets spin up jenkins
 
