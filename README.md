@@ -31,6 +31,10 @@ go build -o  .
 
 configinjector -url=https://localhost:8888/{application}/{profile}[/{label}] -directory=chart
 
+example:
+
+configinjector -url=http://localhost:8888/foo/dev -directory=chart
+
 docker build -t agilesolutions/configinjectorr:latest .
 ```
 
