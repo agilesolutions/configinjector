@@ -23,7 +23,7 @@ func main() {
 
 	exitCode := 0
 
-	param1 := flag.String("url", "http://spring.config.com:8888/cms/default/PRD", "Application yaml file.")
+	param1 := flag.String("url", "http://localhost:8888/foo/dev", "Application yaml file.")
 
 	param2 := flag.String("directory", "", "Directory to download configs")
 
