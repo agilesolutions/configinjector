@@ -97,20 +97,20 @@ func main() {
 
 								case int:
 
-									fmt.Fprintf(w, "%s=%d", propertyName, v)
+									fmt.Fprintf(w, "%s=%d\n", propertyName, v)
 
 								case string:
 
 									if re.MatchString(v) {
 										tagName := blankOut.ReplaceAllString(v, "")
 										fmt.Println("********** found matching tag => ", propertyName, "=", replaceTag(tagName))
-										fmt.Fprintf(w, "%s=%s", propertyName, replaceTag(tagName))
+										fmt.Fprintf(w, "%s=%s\n", propertyName, replaceTag(tagName))
 
 									}
 
 								case float64:
 
-									fmt.Fprintf(w, "%s=%f", propertyName, v)
+									fmt.Fprintf(w, "%s=%f\n", propertyName, v)
 
 								}
 
