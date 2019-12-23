@@ -24,6 +24,18 @@ Fetches Spring Boot application configurtation files (yaml, properties) from Spr
 * export PATH=$PATH:$(go env GOPATH)/bin
 * go env GOPATH
 
+## build linux image on windows
+
+```
+set GOARCH=amd64
+set GOOS=linux
+
+check with 
+
+go env
+
+go build -o configinjector configinjector.go
+```
 ## build
 
 ```
