@@ -10,6 +10,8 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"regexp"
+	"strings"
 )
 
 /*
@@ -52,7 +54,7 @@ func main() {
 	/*
 	* write a new property file aggregating content of all spring boot yaml files
 	* This file gets pulled in on a k8s configmap GO template on a HELM chart
-	*/
+	 */
 	f, ferror := os.Create(dir + "/application.properties")
 	if ferror != nil {
 		panic(ferror)
@@ -78,16 +80,42 @@ func main() {
 
 					source := u.(map[string]interface{})
 
+					re := regexp.MustCompile("{{.*}}")
+					blankOut := regexp.MustCompile("{{|}}")
+
 					for k, z := range source {
 
 						if k == "source" {
 							//fmt.Println("properties found")
 							values := z.(map[string]interface{})
 							// write propery key value pair to new property file on k8s configmap
+
 							for propertyName, propertyValue := range values {
-								fmt.Fprintln(w, propertyName, "=", propertyValue)
 								fmt.Println(propertyName, "=", propertyValue)
+
+								switch v := propertyValue.(type) {
+
+								case int:
+
+									fmt.Fprintf(w, "%s=%d", propertyName, v)
+
+								case string:
+
+									if re.MatchString(v) {
+										tagName := blankOut.ReplaceAllString(v, "")
+										fmt.Println("********** found matching tag => ", propertyName, "=", replaceTag(tagName))
+										fmt.Fprintf(w, "%s=%s", propertyName, replaceTag(tagName))
+
+									}
+
+								case float64:
+
+									fmt.Fprintf(w, "%s=%f", propertyName, v)
+
+								}
+
 								w.Flush()
+
 							}
 
 						}
@@ -107,6 +135,19 @@ func main() {
 	//}
 
 	os.Exit(exitCode)
+}
+/**
+*
+* put the liebermann password fetch on this function
+*
+**/
+func replaceTag(tag string) string {
+
+	if strings.Compare(tag, "password") == 0 {
+		return "PASSWORDFOUND"
+	} else {
+		return "UNDEFINED"
+	}
 }
 
 func HTTPDownload(uri string) ([]byte, error) {
@@ -156,8 +197,8 @@ const mock = `
             "email.smtp.host":"smtppublic.mail.com",
             "email.smtp.port":25,
             "email.smtp.username":"xxx",
-            "email.smtp.password":"test",
-            "application.security.jwt.secret":"lksadfuhsdaflöweuuus",
+            "email.smtp.password":"{{password}}",
+            "application.security.jwt.secret":"{{secret}}",
             "application.security.jwt.validityMinutes":60,
             "application.security.allowedOrigins[0]":"http://localhost:4200"
          }
@@ -165,4 +206,3 @@ const mock = `
    ]
 }
 `
-
