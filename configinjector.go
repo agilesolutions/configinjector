@@ -25,7 +25,7 @@ func main() {
 
 	exitCode := 0
 
-	param1 := flag.String("url", "http://localhost:8888/foo/dev", "Application yaml file.")
+	param1 := flag.String("url", "http://configserver:8888/foo/dev", "Application yaml file.")
 
 	param2 := flag.String("directory", "", "Directory to download configs")
 
@@ -38,16 +38,21 @@ func main() {
 
 	http.DefaultTransport.(*http.Transport).TLSClientConfig = &tls.Config{InsecureSkipVerify: true}
 	// HTTP pull spring boot config from Spring Cloud Config server
-	//if response, err := http.Get(uri); err == nil {
-	fmt.Printf("downloaded %s.\n", uri)
+	response, err := http.Get(uri)
+	if err == nil {
+		fmt.Printf("downloaded %s.\n", uri)
+	} else {
+		fmt.Printf("Error reaching %s.\n", uri)
+		panic(err)
 
-	//defer response.Body.Close()
+	}
+	defer response.Body.Close()
 
-	//nbody, _ := ioutil.ReadAll(response.Body)
+	nbody, _ := ioutil.ReadAll(response.Body)
 
 	var m interface{}
 
-	error := json.Unmarshal([]byte(mock), &m)
+	error := json.Unmarshal([]byte(nbody), &m)
 	if error != nil {
 		panic(error)
 	}
@@ -136,6 +141,7 @@ func main() {
 
 	os.Exit(exitCode)
 }
+
 /**
 *
 * put the liebermann password fetch on this function
