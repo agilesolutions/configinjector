@@ -103,6 +103,8 @@ func main() {
 									fmt.Println("********** found matching tag => ", propertyName, "=", replaceTag(tagName))
 									fmt.Fprintf(w, "%s=%s\n", propertyName, replaceTag(tagName))
 
+								} else {
+									fmt.Fprintf(w, "%s=%s\n", propertyName, propertyValue)
 								}
 
 //								switch v := propertyValue.(type) {
