@@ -2,7 +2,7 @@
 This GO application gets packaged on a Docker Image and pulled from a registry by a Kubernetes Init-Container. This program pulls application configuration from Spring Cloud Config server and injects that config on the application container  during POD initialization through Kubernetes Init-Containers.
 [Read about Spring Cloud Config server](https://o7planning.org/en/11727/understanding-spring-cloud-config-client-with-example)
 
-## Injecting Spring
+## Injecting Application configuration from Spring Cloud Config server
 
 1. k8s pulls init container from Harbor Docker registry on POD deployment, this images runs the GO configuration injection program.
 2. GO program pulls the application configuration yaml file from Spring Cloud Config server over HTTPS.
