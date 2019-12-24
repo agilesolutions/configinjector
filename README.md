@@ -1,5 +1,5 @@
-# Jenkins Pipeline Agent to inject Spring Boot application config on k8s configmap
-Fetches Spring Boot application configurtation files (yaml, properties) from Spring Cloud Config server and injects config on HELM chart on a k8s configmap. This GO app get packaged on docker images and executed as Jenkins Docker Agent on Jenkins Groovy deployment pipeline
+# Injecting application configuration through Kubernetes Init-Containers
+This GO application gets packaged on a Docker Image and pulled from a registry by a Kubernetes Init-Container. This program pulls application configuration from Spring Cloud Config server and injects that config on the application container  during POD initialization through Kubernetes Init-Containers.
 [Read about Spring Cloud Config server](https://o7planning.org/en/11727/understanding-spring-cloud-config-client-with-example)
 
 ## Injecting Spring
