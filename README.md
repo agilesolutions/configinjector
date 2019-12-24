@@ -13,6 +13,40 @@ Fetches Spring Boot application configurtation files (yaml, properties) from Spr
 
 ![Jenkins kubernetes pipelines](pipeline.JPG)
 
+## Sharing storage between Go init container and application container.
+```
+    spec:
+      containers:
+      - name: demo
+        image: agilesolutions/demo:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+        resources:
+          requests:
+            cpu: "200m"
+            memory: "300Mi"
+        volumeMounts:
+          - name: workdir
+            mountPath: /usr/include
+            readOnly: false
+        env:
+          - name: PORT
+            value : "8080"
+# These containers are run during pod initialization
+      initContainers:
+      - name: init-config
+        image: agilesolutions/configinjector:remote
+        command: ['configinjector', '-url=http://configserver:8888/foo/dev', '-directory=/usr/include']
+        volumeMounts:
+          - name: workdir
+            mountPath: /usr/include
+            readOnly: false
+      volumes:
+      - name: workdir
+        emptyDir: {}
+```
+
 ## setup
 
 * [goto](https://www.katacoda.com/courses/docker/deploying-first-container)
