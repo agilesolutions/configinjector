@@ -4,11 +4,12 @@ Fetches Spring Boot application configurtation files (yaml, properties) from Spr
 
 ## Injecting Spring
 
-1. JIRA deployment ticket triggers Jenkins deployment pipeline with JIRA webhook
-2. Jenkins pipeline stage fetches HELM charts from GIT repo
-3. Jenkins Agent (this GO program) fetches Spring Boot application configs from Spring Cloud Config server.
-4. HELM fetches Docker Image from Harbor Docker registry
-5. HELM deploys Docker Image on kubernetes cluster through deployment, service, configmap and ingres k8s manifests
+1. k8s pulls init container from Harbor Docker registry on POD deployment, this images runs the GO configuration injection program.
+2. GO program pulls the application configuration yaml file from Spring Cloud Config server over HTTPS.
+3. Searches for GO Template placeholders alike {{password}} format, depicting the Libermann password credential ID's. Call Liebermann over REST to obtaining the password and inject that password on the properties file.
+4. GO program saves the property file on a directory that is mounted through kubernetes k8s volumemount, after having replaced all placeholders with passwords and credentials from Liebermann.
+5. After successfully completing the init-container, the real application image gets pulled from Harbor Docker registry and started.
+6. The application containers gets the EmptyDir device mounted on its /usr/include directory and will receive the application property file containing all secrets derived from Liebermann.
 
 ![Jenkins kubernetes pipelines](pipeline.JPG)
 
