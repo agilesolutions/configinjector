@@ -161,7 +161,7 @@ func replaceTag(tag string) string {
 	if strings.Compare(tag, "password") == 0 {
 		return "PASSWORDFOUND"
 	} else {
-		panic(fmt.Sprintf("no password found with Liebermann identifier : %s", tag))
+		panic(fmt.Sprintf("no password found with Liebermann identifier : %s, check your application configurations", tag))
 	}
 }
 
