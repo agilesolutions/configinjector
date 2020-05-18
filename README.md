@@ -148,9 +148,9 @@ def call(artifact, version ) {
 
 ## read
 
-1 [check this](https://www.callicoder.com/docker-golang-image-container-example/)
-2 [parse yaml](https://stackoverflow.com/questions/28682439/go-parse-yaml-file/28683173)
-3 [wget to file](https://stackoverflow.com/questions/11692860/how-can-i-efficiently-download-a-large-file-using-go)
-4 [get go package](https://gopkg.in/yaml.v2)
-5 [jenkins pipelines and docker agents](https://jenkins.io/doc/book/pipeline/docker/)
-6 [regex placeholder replacement](https://github.com/shapeshed/golang-book-examples/blob/master/hour22/example06.go)
+1. [check this](https://www.callicoder.com/docker-golang-image-container-example/)
+2. [parse yaml](https://stackoverflow.com/questions/28682439/go-parse-yaml-file/28683173)
+3. [wget to file](https://stackoverflow.com/questions/11692860/how-can-i-efficiently-download-a-large-file-using-go)
+4. [get go package](https://gopkg.in/yaml.v2)
+5. [jenkins pipelines and docker agents](https://jenkins.io/doc/book/pipeline/docker/)
+6. [regex placeholder replacement](https://github.com/shapeshed/golang-book-examples/blob/master/hour22/example06.go)
